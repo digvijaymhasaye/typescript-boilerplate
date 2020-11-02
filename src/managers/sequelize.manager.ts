@@ -1,5 +1,5 @@
-import { Sequelize } from "sequelize";
-import { noteSchema } from "../models";
+import { Sequelize } from 'sequelize';
+import { noteSchema, userSchema } from '../models';
 import config from '../config';
 
 const sequelize = new Sequelize(
@@ -22,11 +22,17 @@ const sequelize = new Sequelize(
   },
 );
 
+sequelize.showAllSchemas({ logging: true });
 sequelize.sync();
 
 const NoteModel = noteSchema(sequelize);
+const UserModel = userSchema(sequelize);
+
+UserModel.hasMany(NoteModel, { foreignKey: 'user_id' });
+NoteModel.belongsTo(UserModel, { foreignKey: 'user_id' });
 
 export {
   sequelize,
   NoteModel,
+  UserModel,
 };

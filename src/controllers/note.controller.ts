@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import { noteService } from "../services";
+import { Request, Response, NextFunction } from 'express';
+import { noteService } from '../services';
 
 const getNotes = async (req: Request, res: Response) => {
   try {
@@ -13,7 +13,8 @@ const getNotes = async (req: Request, res: Response) => {
 const addNote = async (req: Request, res: Response) => {
   try {
     console.info('Add note', req.body);
-    const note = await noteService.addNote(req.body);
+    const { user_id, name, description } = req.body;
+    const note = await noteService.addNote(user_id, name, description);
     return res.status(200).send({ note });
   } catch (error) {
     console.error(error);

@@ -1,16 +1,13 @@
-'use strict';
-import { NoteModel } from "../managers/sequelize.manager";
-import { AddNote } from '../interfaces';
+import { NoteModel } from '../managers/sequelize.manager';
 
 const getList = async () => NoteModel.findAll();
 
-const addNote = async (addNoteRequest: AddNote) => {
-  console.info(addNoteRequest);
-  return NoteModel.create({
-    name: addNoteRequest.name,
-    description: addNoteRequest.description,
-  });
-}
+const addNote = async (userId: number, name: string, description: string) => NoteModel.create({
+  name,
+  description,
+  user_id: userId,
+});
+
 export default {
   getList,
   addNote,

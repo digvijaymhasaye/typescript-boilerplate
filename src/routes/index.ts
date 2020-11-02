@@ -1,10 +1,10 @@
-import Router from "express";
-import { noteController } from "../controllers";
+import Router from 'express';
+import noteRoutes from './notes.routes';
+import userRoutes from './users.routes';
 
 const apiRoutes = Router();
 
-apiRoutes.get('/', noteController.getNotes);
-
-apiRoutes.post('/', noteController.addNote);
+apiRoutes.use('/notes', noteRoutes);
+apiRoutes.use('/users', userRoutes);
 
 export default apiRoutes;
