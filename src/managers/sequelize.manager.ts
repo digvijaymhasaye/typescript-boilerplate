@@ -22,9 +22,6 @@ const sequelize = new Sequelize(
   },
 );
 
-sequelize.showAllSchemas({ logging: true });
-sequelize.sync();
-
 const NoteModel = noteSchema(sequelize);
 const UserModel = userSchema(sequelize);
 

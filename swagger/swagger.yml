@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: Typescript Boilerplate API
+  version: '1.0'
+  contact:
+    name: Digvijay Mhasaye
+    url: https://github.com/digvijaymhasaye
+    email: digvijaymhasaye8@gmail.com
+servers:
+  - url: 'http://localhost:10010'
+    description: Local
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  meta:
+                    $ref: '#/components/schemas/meta'
+components:
+  schemas:
+    meta:
+      type: object
+      properties:
+        version:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: bearer
+      description: ''
+security:
+  - Authorization: []
