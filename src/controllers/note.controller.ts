@@ -1,9 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import { noteService } from '../services';
+import { getListValidation, addNoteValidation } from '../validations';
 
 const getNotes = async (req: Request, res: Response) => {
   try {
-    const notes = await noteService.getList();
+    const {
+      search, pageNo, pageSize, sortOrder
+    } = await getListValidation.validateAsync(req.query);
+    const notes = await noteService.getList({
+      search, pageNo, pageSize, sortOrder,
+    });
     return res.status(200).send({ notes });
   } catch (error) {
     return res.status(500).send(error);
@@ -12,8 +18,7 @@ const getNotes = async (req: Request, res: Response) => {
 
 const addNote = async (req: Request, res: Response) => {
   try {
-    console.info('Add note', req.body);
-    const { user_id, name, description } = req.body;
+    const { user_id, name, description } = await addNoteValidation.validateAsync(req.body);
     const note = await noteService.addNote(user_id, name, description);
     return res.status(200).send({ note });
   } catch (error) {
